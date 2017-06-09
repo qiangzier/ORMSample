@@ -9,8 +9,6 @@ import android.widget.TextView
 import com.hzq.roomsample.CreateProductActivity
 import com.hzq.roomsample.R
 import com.hzq.roomsample.db.entity.ProductEntity
-import com.hzq.roomsample.helper.coroutine
-import com.hzq.roomsample.helper.dbHelper
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 
@@ -39,16 +37,6 @@ class MyAdapter(val mContext: Context) : RecyclerView.Adapter<MyViewHolder>(){
 
             holder?.itemView?.setOnClickListener {
                 mContext.startActivity<CreateProductActivity>("id" to id)
-            }
-
-            val model = this
-            holder?.itemView?.setOnLongClickListener {
-                coroutine({
-                    mContext.dbHelper.delete(model)
-                }){
-                    notifyDataSetChanged()
-                }
-                return@setOnLongClickListener false
             }
         }
     }
