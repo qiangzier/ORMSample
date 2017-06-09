@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.hzq.roomsample.CreateProductActivity
 import com.hzq.roomsample.R
 import com.hzq.roomsample.db.entity.ProductEntity
+import com.hzq.roomsample.helper.coroutine
+import com.hzq.roomsample.helper.dbHelper
 import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
 
 /**
  * @author: hezhiqiang
@@ -27,14 +31,24 @@ class MyAdapter(val mContext: Context) : RecyclerView.Adapter<MyViewHolder>(){
         }
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder?, position: Int): Unit {
         with(mData[position]) {
             holder?.name?.text = name
             holder?.desc?.text = description
             holder?.price?.text = "${price} 元"
 
             holder?.itemView?.setOnClickListener {
-//                mContext.startActivity<TaskCreateActivity>("id" to id)
+                mContext.startActivity<CreateProductActivity>("id" to id)
+            }
+
+            val model = this
+            holder?.itemView?.setOnLongClickListener {
+                coroutine({
+                    mContext.dbHelper.delete(model)
+                }){
+                    notifyDataSetChanged()
+                }
+                return@setOnLongClickListener false
             }
         }
     }

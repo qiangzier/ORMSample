@@ -1,12 +1,14 @@
 package com.hzq.roomsample.helper;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.hzq.roomsample.db.AppDatabase;
-import com.hzq.roomsample.db.DatabaseCreator;
 import com.hzq.roomsample.db.entity.ProductEntity;
 
 import java.util.List;
+
+import static com.hzq.roomsample.db.AppDatabase.DATABASE_NAME;
 
 /**
  * @author: hezhiqiang
@@ -18,7 +20,11 @@ import java.util.List;
 public class AppDatabaseHelper {
     AppDatabase mAppDatabase;
     public AppDatabaseHelper(Context context){
-        mAppDatabase = DatabaseCreator.getInstance(context).getAppDatabase();
+        // Reset the database to have new data on every run.
+        context.deleteDatabase(DATABASE_NAME);
+        //创建数据库
+        mAppDatabase = Room.databaseBuilder(context.getApplicationContext(),
+                AppDatabase.class,DATABASE_NAME).build();
     }
 
     public List<ProductEntity> getAllProducts(){
@@ -35,6 +41,10 @@ public class AppDatabaseHelper {
         }
     }
 
+    public void insert(ProductEntity product){
+        mAppDatabase.productDao().insertAll(product);
+    }
+
     public void updateAll(List<ProductEntity> entities){
         for (ProductEntity entity : entities) {
             mAppDatabase.productDao().updateAll(entity);
@@ -47,7 +57,16 @@ public class AppDatabaseHelper {
         }
     }
 
+    public void delete(ProductEntity entity){
+        mAppDatabase.productDao().deleteAll(entity);
+    }
 
-
+    public void delete(long id){
+        if(id != 0){
+            ProductEntity entity = new ProductEntity();
+            entity.id = id;
+            mAppDatabase.productDao().deleteAll(entity);
+        }
+    }
 
 }

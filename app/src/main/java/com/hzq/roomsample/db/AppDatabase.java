@@ -20,7 +20,7 @@ import com.hzq.roomsample.db.entity.ProductEntity;
 @Database(entities = {ProductEntity.class, CommentEntity.class},version = 1)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
-    static String DATABASE_NAME = "room-sample-db";
+    public static String DATABASE_NAME = "room-sample-db";
 
     public abstract ProductDao productDao();
 
