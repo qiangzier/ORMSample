@@ -1,11 +1,46 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:editTextColor">@color/color_1D1D1D</item>
+        <item name="android:textColorPrimary">@color/color_1D1D1D</item>
+        <item name="android:textColorSecondary">@color/color_1D1D1D</item>
+        <item name="android:textColorTertiary">@color/color_1D1D1D</item>
+        <item name="android:textColorPrimaryInverse">@color/color_1D1D1D</item>
+        <item name="android:textColorSecondaryInverse">@color/color_1D1D1D</item>
+        <item name="android:textColorTertiaryInverse">@color/color_1D1D1D</item>
+        <item name="android:windowBackground">@color/color_F5F5F5</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="colorPrimary">@color/color_white</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowNoDisplay">false</item>
+    </style>
+
+    <style name="AppTheme.White" parent="@style/AppTheme">
+        <item name="colorPrimary">@color/color_white</item>
+        <item name="colorPrimaryDark">@color/black_30_percent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/color_333333</item>
+        <item name="android:windowBackground">@color/color_F5F5F5</item>
+        <item name="android:dialogTheme">@style/AppTheme.Dialog</item>
+        <item name="android:scrollbarSize">4dp</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollbarThumbVertical">@color/color_CCCCCC</item>
+        <item name="android:scrollbarThumbHorizontal">@color/color_CCCCCC</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item> <!--新增一个item，用于控制menu-->
+    </style>
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <item name="overlapAnchor">true</item>  <!--把该属性改为false即可使menu位置位于toolbar之下-->
     </style>
 
 </resources>
