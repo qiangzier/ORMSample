@@ -2,6 +2,7 @@ package com.hzq.roomsample.db.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 /**
@@ -11,7 +12,8 @@ import android.arch.persistence.room.PrimaryKey;
  * @description:
  */
 
-@Entity(tableName = "products")
+@Entity(tableName = "products",
+        indices = {@Index(value = {"id","name"},unique = true)})
 public class ProductEntity {
     @PrimaryKey(autoGenerate = true)
     public long id;

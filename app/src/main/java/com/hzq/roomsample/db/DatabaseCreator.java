@@ -1,6 +1,8 @@
 package com.hzq.roomsample.db;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
@@ -39,7 +41,16 @@ public class DatabaseCreator {
         context.deleteDatabase(DATABASE_NAME);
         //创建数据库
         appDatabase = Room.databaseBuilder(context.getApplicationContext(),
-                AppDatabase.class,DATABASE_NAME).build();
+                AppDatabase.class,DATABASE_NAME)
+                .addMigrations(MIGRATION_1_2)
+                .build();
     }
 
+    private static Migration MIGRATION_1_2 = new Migration(1,2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, "
+                    + "`name` TEXT, PRIMARY KEY(`id`))");
+        }
+    };
 }

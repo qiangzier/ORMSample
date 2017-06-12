@@ -1,6 +1,8 @@
 package com.hzq.roomsample.helper;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 
 import com.hzq.roomsample.db.AppDatabase;
@@ -24,7 +26,15 @@ public class AppDatabaseHelper {
         context.deleteDatabase(DATABASE_NAME);
         //创建数据库
         mAppDatabase = Room.databaseBuilder(context.getApplicationContext(),
-                AppDatabase.class,DATABASE_NAME).build();
+                AppDatabase.class,DATABASE_NAME)
+                .addMigrations(new Migration(1,2) {
+                    @Override
+                    public void migrate(SupportSQLiteDatabase database) {
+                        database.execSQL("CREATE TABLE `Fruit` (`id` INTEGER, "
+                                + "`name` TEXT, PRIMARY KEY(`id`))");
+                    }
+                })
+                .build();
     }
 
     public List<ProductEntity> getAllProducts(){
@@ -35,8 +45,9 @@ public class AppDatabaseHelper {
         return mAppDatabase.productDao().getProductById(id);
     }
 
-    public void insertAll(List<ProductEntity> products){
-        for (ProductEntity product : products) {
+    public void insertAll(List<ProductEntity> entities){
+        if(entities == null || entities.size() == 0) return;
+        for (ProductEntity product : entities) {
             mAppDatabase.productDao().insertAll(product);
         }
     }
@@ -46,12 +57,14 @@ public class AppDatabaseHelper {
     }
 
     public void updateAll(List<ProductEntity> entities){
+        if(entities == null || entities.size() == 0) return;
         for (ProductEntity entity : entities) {
             mAppDatabase.productDao().updateAll(entity);
         }
     }
 
     public void deleteAll(List<ProductEntity> entities){
+        if(entities == null || entities.size() == 0) return;
         for (ProductEntity entity : entities) {
             mAppDatabase.productDao().deleteAll(entity);
         }
@@ -67,6 +80,10 @@ public class AppDatabaseHelper {
             entity.id = id;
             mAppDatabase.productDao().deleteAll(entity);
         }
+    }
+
+    public void deleteAll(){
+        deleteAll(getAllProducts());
     }
 
 }
