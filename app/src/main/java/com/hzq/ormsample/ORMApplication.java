@@ -2,6 +2,7 @@ package com.hzq.ormsample;
 
 import android.app.Application;
 
+import com.hzq.db.greendao.DBManager;
 import com.hzq.db.room.DatabaseCreator;
 
 /**
@@ -17,5 +18,6 @@ public class ORMApplication extends Application {
     public void onCreate() {
         super.onCreate();
         DatabaseCreator.init(this);
+        DBManager.init(this);
     }
 }

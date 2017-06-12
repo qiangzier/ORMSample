@@ -1,29 +1,38 @@
-package com.hzq.db.room.entity;
-
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
+package com.hzq.db.greendao.entity;
 
 import com.hzq.ormsample.model.Product;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
 /**
  * @author: hezhiqiang
- * @date: 2017/6/8
+ * @date: 2017/6/12
  * @version:
  * @description:
  */
 
-@Entity(tableName = "products",
-        indices = {@Index(value = {"id","name"},unique = true)})
-public class ProductEntity implements Product{
-    @PrimaryKey(autoGenerate = true)
+@Entity
+public class ProductEntity implements Product {
+
+    @Id
     private long id;
     private String name;
     private String description;
     private double price;
-    @Ignore
-    private String testField;
+
+    @Generated(hash = 1251424648)
+    public ProductEntity(long id, String name, String description, double price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    @Generated(hash = 27353230)
+    public ProductEntity() {
+    }
 
     @Override
     public long getId() {
@@ -63,13 +72,5 @@ public class ProductEntity implements Product{
     @Override
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public String getTestField() {
-        return testField;
-    }
-
-    public void setTestField(String testField) {
-        this.testField = testField;
     }
 }

@@ -4,10 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hzq.db.greendao.migration.MigrationHelper;
-import com.hzq.db.greendao.sysdao.AddressDao;
+import com.hzq.db.greendao.sysdao.CommentEntityDao;
 import com.hzq.db.greendao.sysdao.DaoMaster;
 import com.hzq.db.greendao.sysdao.DaoSession;
-import com.hzq.db.greendao.sysdao.UserDao;
+import com.hzq.db.greendao.sysdao.ProductEntityDao;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -62,7 +62,7 @@ public class DBManager {
         @Override
         public void onUpgrade(Database db, int oldVersion, int newVersion) {
             //数据库迁移操作
-            MigrationHelper.getInstance().migrate(db,UserDao.class, AddressDao.class);
+            MigrationHelper.getInstance().migrate(db,ProductEntityDao.class, CommentEntityDao.class);
         }
     }
 }

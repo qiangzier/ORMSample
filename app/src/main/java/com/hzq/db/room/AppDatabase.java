@@ -9,7 +9,6 @@ import com.hzq.db.room.dao.CommentDao;
 import com.hzq.db.room.dao.ProductDao;
 import com.hzq.db.room.entity.CommentEntity;
 import com.hzq.db.room.entity.ProductEntity;
-import com.hzq.db.room.entity.User;
 
 /**
  * @author: hezhiqiang
@@ -18,7 +17,7 @@ import com.hzq.db.room.entity.User;
  * @description: 数据库管理类
  */
 
-@Database(entities = {ProductEntity.class, CommentEntity.class, User.class},version = 2)
+@Database(entities = {ProductEntity.class, CommentEntity.class},version = 1)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
     public static String DATABASE_NAME = "room-sample-db";

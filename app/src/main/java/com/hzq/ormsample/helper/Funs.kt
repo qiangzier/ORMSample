@@ -16,7 +16,7 @@ object DB{
     @Synchronized
     fun getDB(): AppDatabaseHelper{
         if(instance == null){
-            instance = AppDatabaseHelper()
+            instance = AppDatabaseHelper(0)
         }
         return instance!!
     }
