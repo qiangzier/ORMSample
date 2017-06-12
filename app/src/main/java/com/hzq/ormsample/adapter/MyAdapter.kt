@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.hzq.db.room.entity.ProductEntity
 import com.hzq.ormsample.CreateProductActivity
 import com.hzq.ormsample.R
+import com.hzq.ormsample.model.Product
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
 
@@ -20,9 +21,9 @@ import org.jetbrains.anko.startActivity
  */
 
 class MyAdapter(val mContext: Context) : RecyclerView.Adapter<MyViewHolder>(){
-    var mData: List<ProductEntity> = arrayListOf()
+    var mData: List<Product> = arrayListOf()
 
-    fun setData(list: List<ProductEntity>?){
+    fun setData(list: List<out Product>?){
         if(list != null) {
             mData = list
             notifyDataSetChanged()
