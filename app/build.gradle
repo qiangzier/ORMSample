@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -30,6 +31,11 @@ android {
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
+
+    greendao {
+        targetGenDir 'src/main/java'
+        daoPackage 'com.hzq.db.greendao.sysdao'
+    }
 }
 
 dependencies {
@@ -55,6 +61,8 @@ dependencies {
     compile "org.jetbrains.anko:anko:$anko_version"
 
     compile 'org.greenrobot:eventbus:3.0.0'
+
+    compile 'org.greenrobot:greendao:3.0.1'
 }
 repositories {
     mavenCentral()
