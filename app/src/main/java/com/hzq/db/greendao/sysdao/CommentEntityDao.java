@@ -22,13 +22,13 @@ public class CommentEntityDao extends AbstractDao<CommentEntity, Integer> {
     /**
      * Properties of entity CommentEntity.<br/>
      * Can be used for QueryBuilder and for referencing column names.
-    */
+     */
     public static class Properties {
         public final static Property Id = new Property(0, int.class, "id", true, "ID");
         public final static Property ProductId = new Property(1, long.class, "productId", false, "PRODUCT_ID");
         public final static Property Text = new Property(2, String.class, "text", false, "TEXT");
         public final static Property PostedAt = new Property(3, java.util.Date.class, "postedAt", false, "POSTED_AT");
-    };
+    }
 
 
     public CommentEntityDao(DaoConfig config) {
@@ -125,6 +125,11 @@ public class CommentEntityDao extends AbstractDao<CommentEntity, Integer> {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean hasKey(CommentEntity entity) {
+        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
     }
 
     @Override

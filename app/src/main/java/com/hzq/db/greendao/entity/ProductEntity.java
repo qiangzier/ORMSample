@@ -16,14 +16,14 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class ProductEntity implements Product {
 
-    @Id
-    private long id;
+    @Id(autoincrement = true)
+    private Long id;    //这个逼玩意必须是Long，因为在数据库中只有id=null时才会自增。
     private String name;
     private String description;
     private double price;
 
-    @Generated(hash = 1251424648)
-    public ProductEntity(long id, String name, String description, double price) {
+    @Generated(hash = 103207635)
+    public ProductEntity(Long id, String name, String description, double price) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -35,12 +35,12 @@ public class ProductEntity implements Product {
     }
 
     @Override
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

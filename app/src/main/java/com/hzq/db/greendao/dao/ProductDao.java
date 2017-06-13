@@ -21,26 +21,49 @@ public class ProductDao {
         mProductDao = DBManager.getIntence().getDaoSession().getProductEntityDao();
     }
 
-    public void insertProduct(ProductEntity user){
-        mProductDao.insert(user);
+    /**
+     * insert product
+     * @param entity
+     */
+    public void insertProduct(ProductEntity entity){
+        mProductDao.insert(entity);
     }
 
-    public void insertUserList(List<ProductEntity> users){
-        if(users == null || users.size() == 0) return;
-        mProductDao.insertInTx(users);
+    public void insertUserList(List<ProductEntity> entitys){
+        if(entitys == null || entitys.size() == 0) return;
+        mProductDao.insertInTx(entitys);
     }
 
-    public void deleteProduct(ProductEntity user){
-        mProductDao.delete(user);
+    /**
+     * delete product
+     * @param entity
+     */
+    public void deleteProduct(ProductEntity entity){
+        mProductDao.delete(entity);
     }
 
-    public void updateProduct(ProductEntity user){
-        mProductDao.update(user);
+    /**
+     * update product
+     * @param entity
+     */
+    public void updateProduct(ProductEntity entity){
+        mProductDao.update(entity);
     }
 
+    /**
+     * 获取所有product
+     * @return
+     */
     public List<ProductEntity> getAllUser(){
         QueryBuilder<ProductEntity> userQueryBuilder = mProductDao.queryBuilder();
         return userQueryBuilder.list();
+    }
+    /**
+     * 获取所有product
+     * @return
+     */
+    public List<ProductEntity> getALLUser1(){
+        return mProductDao.loadAll();
     }
 
     public List<ProductEntity> getAllUser(int price){
@@ -49,7 +72,19 @@ public class ProductDao {
         return builder.list();
     }
 
+    /**
+     * 根据id获取product
+     * @return
+     */
     public ProductEntity getUserById(long id){
-        return mProductDao.loadByRowId(id);
+        return mProductDao.load(id);
+    }
+
+    /**
+     * 执行sql
+     * @param sql
+     */
+    public void execSql(String sql){
+        DBManager.getIntence().getDaoSession().getDatabase().execSQL(sql);
     }
 }

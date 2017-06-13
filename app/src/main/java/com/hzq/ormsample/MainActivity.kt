@@ -3,7 +3,10 @@ package com.hzq.ormsample
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import com.hzq.ormsample.adapter.MyAdapter
+import com.hzq.ormsample.helper.DB
 import com.hzq.ormsample.helper.coroutine
 import com.hzq.ormsample.helper.dbHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +22,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolBar()
+        title = "RoomSample"
         EventBus.getDefault().register(this)
         fab.setOnClickListener {
             startActivity<CreateProductActivity>()
@@ -41,6 +45,30 @@ class MainActivity : BaseActivity() {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     fun onMessageEvent(eventChenge: OnEventChenge){
         loadData()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.orm_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.action_room -> {
+                DB.type = 0
+                title = "RoomSample"
+            }
+            R.id.action_greendao -> {
+                DB.type = 1
+                title = "GreenDaoSample"
+            }
+            R.id.action_ormlite -> {
+                DB.type = 2
+                title = "ORMLiteSample"
+            }
+        }
+        loadData()
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

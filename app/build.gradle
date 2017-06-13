@@ -32,7 +32,15 @@ android {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
+    /**
+     * schemaVersion： 数据库schema版本，也可以理解为数据库版本号
+     * daoPackage：设置DaoMaster、DaoSession、Dao包名
+     * targetGenDir：设置DaoMaster、DaoSession、Dao目录
+     * targetGenDirTest：设置生成单元测试目录
+     * generateTests：设置自动生成单元测试用例
+     */
     greendao {
+        schemaVersion 1
         targetGenDir 'src/main/java'
         daoPackage 'com.hzq.db.greendao.sysdao'
     }
@@ -62,8 +70,6 @@ dependencies {
 
     compile 'org.greenrobot:eventbus:3.0.0'
 
-    compile 'org.greenrobot:greendao:3.0.1'
+    compile "org.greenrobot:greendao:$greendao_verson"
 }
-repositories {
-    mavenCentral()
-}
+

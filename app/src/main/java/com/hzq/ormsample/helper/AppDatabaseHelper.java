@@ -1,5 +1,7 @@
 package com.hzq.ormsample.helper;
 
+import android.util.Log;
+
 import com.hzq.db.greendao.dao.ProductDao;
 import com.hzq.db.room.AppDatabase;
 import com.hzq.db.room.DatabaseCreator;
@@ -18,15 +20,26 @@ import java.util.List;
 public class AppDatabaseHelper {
     AppDatabase mAppDatabase;
     ProductDao mProductDao;
-    private int type;
-    public AppDatabaseHelper(int type){
-        this.type = type;
+    private static final String TAG = AppDatabaseHelper.class.getSimpleName();
+    public AppDatabaseHelper(){
         mAppDatabase = DatabaseCreator.getInstance().getAppDatabase();
         mProductDao = new ProductDao();
     }
 
-    public List<? extends Product> getAllProducts(){
+    public int getDbType(){
+        int type = DB.INSTANCE.getType();
         if(type == 1){
+            Log.d(TAG,"current use greenDao..."+String.valueOf(DB.INSTANCE.getType()));
+        }else if(type == 2){
+            Log.d(TAG,"current use ORMLite..."+String.valueOf(DB.INSTANCE.getType()));
+        }else{
+            Log.d(TAG,"current use ROOM..."+String.valueOf(DB.INSTANCE.getType()));
+        }
+        return type;
+    }
+
+    public List<? extends Product> getAllProducts(){
+        if(getDbType() == 1){
             return mProductDao.getAllUser();
         }else {
             return mAppDatabase.productDao().queryProducts();
@@ -34,7 +47,7 @@ public class AppDatabaseHelper {
     }
 
     public Product getProductById(long id){
-        if(type == 1){
+        if(getDbType() == 1){
             return mProductDao.getUserById(id);
         }else {
             return mAppDatabase.productDao().getProductById(id);
@@ -44,7 +57,7 @@ public class AppDatabaseHelper {
     public void insertAll(List<ProductEntity> entities){
         if(entities == null || entities.size() == 0) return;
         for (ProductEntity product : entities) {
-            if(type == 1){
+            if(getDbType() == 1){
                 mProductDao.insertProduct(convertProduct(product));
             } else {
                 mAppDatabase.productDao().insertAll(product);
@@ -53,7 +66,7 @@ public class AppDatabaseHelper {
     }
 
     public void insert(ProductEntity product){
-        if(type == 1){
+        if(getDbType() == 1){
             mProductDao.insertProduct(convertProduct(product));
         }else {
             mAppDatabase.productDao().insertAll(product);
@@ -68,7 +81,7 @@ public class AppDatabaseHelper {
     }
 
     public void updateProduct(ProductEntity entity){
-        if(type == 1){
+        if(getDbType() == 1){
             mProductDao.updateProduct(convertProduct(entity));
         }else {
             mAppDatabase.productDao().updateAll(entity);
@@ -83,18 +96,22 @@ public class AppDatabaseHelper {
     }
 
     public void delete(ProductEntity entity){
-        if(type == 1) {
+        if(getDbType() == 1) {
             mProductDao.deleteProduct(convertProduct(entity));
         }else {
             mAppDatabase.productDao().deleteAll(entity);
         }
     }
 
-    public void delete(long id){
+    public void delete(Long id){
         if(id != 0){
-//            ProductEntity entity = new ProductEntity();
-//            entity.id = id;
-//            mAppDatabase.productDao().deleteAll(entity);
+            ProductEntity entity = new ProductEntity();
+            entity.setId(id);
+            if(getDbType() == 1){
+                mProductDao.deleteProduct(convertProduct(entity));
+            }else {
+                mAppDatabase.productDao().deleteAll(entity);
+            }
         }
     }
 

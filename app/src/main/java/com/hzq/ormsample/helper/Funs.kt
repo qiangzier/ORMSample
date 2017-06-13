@@ -13,13 +13,15 @@ import kotlinx.coroutines.experimental.android.UI
 
 object DB{
     private var instance: AppDatabaseHelper? = null
+    var type: Int = 0
     @Synchronized
     fun getDB(): AppDatabaseHelper{
         if(instance == null){
-            instance = AppDatabaseHelper(0)
+            instance = AppDatabaseHelper()
         }
         return instance!!
     }
+
 }
 
 val Context.dbHelper: AppDatabaseHelper

@@ -47,8 +47,8 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
-        commentEntityDaoConfig.getIdentityScope().clear();
-        productEntityDaoConfig.getIdentityScope().clear();
+        commentEntityDaoConfig.clearIdentityScope();
+        productEntityDaoConfig.clearIdentityScope();
     }
 
     public CommentEntityDao getCommentEntityDao() {

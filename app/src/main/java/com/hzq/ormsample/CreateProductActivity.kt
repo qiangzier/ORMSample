@@ -14,14 +14,14 @@ import org.jetbrains.anko.toast
 
 class CreateProductActivity : BaseActivity() {
 
-    var id: Long = 0
+    var id: Long = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_product)
         initToolBar()
-        id = intent.getLongExtra("id",0)
-        if(id == 0L) setTitle("create product") else setTitle("update product")
-        delete.visibility = if(id == 0L) View.GONE else View.VISIBLE
+        id = intent.getLongExtra("id", -1)
+        if(isIdNull()) title = "create product" else title = "update product"
+        delete.visibility = if(isIdNull()) View.GONE else View.VISIBLE
         delete.setOnClickListener {
             coroutine({
                 dbHelper.delete(id)
@@ -31,7 +31,7 @@ class CreateProductActivity : BaseActivity() {
                 finish()
             }
         }
-        if(id != 0L) {
+        if(!isIdNull()) {
             coroutine({
                 dbHelper.getProductById(id)
             }) {
@@ -42,6 +42,10 @@ class CreateProductActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    fun isIdNull(): Boolean{
+        return id == null || "-1".equals(id.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -56,15 +60,17 @@ class CreateProductActivity : BaseActivity() {
 
     fun save(){
         var p = ProductEntity()
-        p.id = id
+        if(!isIdNull()){
+            p.id = id
+        }
         p.name = inputName.text.toString()
         p.description = inputDesc.text.toString()
         p.price = if(!TextUtils.isEmpty(inputPrice.text.toString())) inputPrice.text.toString().toDouble() else 0.0
 
         coroutine({
-            dbHelper.insert(p)
+            if(!isIdNull()) dbHelper.updateProduct(p) else  dbHelper.insert(p)
         }){
-            toast("save success")
+            if(!isIdNull()) toast("save success") else toast("update success")
             EventBus.getDefault().post(OnEventChenge(1))
             finish()
         }

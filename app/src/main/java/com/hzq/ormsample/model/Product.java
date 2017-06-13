@@ -8,9 +8,9 @@ package com.hzq.ormsample.model;
  */
 
 public interface Product {
-    long getId();
+    Long getId();
 
-    void setId(long id);
+    void setId(Long id);
 
     String getName();
 

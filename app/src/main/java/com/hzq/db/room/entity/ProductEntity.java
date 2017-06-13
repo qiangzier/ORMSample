@@ -18,7 +18,7 @@ import com.hzq.ormsample.model.Product;
         indices = {@Index(value = {"id","name"},unique = true)})
 public class ProductEntity implements Product{
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private Long id;
     private String name;
     private String description;
     private double price;
@@ -26,12 +26,12 @@ public class ProductEntity implements Product{
     private String testField;
 
     @Override
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
     @Override
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
