@@ -5,6 +5,7 @@ import com.hzq.ormsample.model.Product;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * @author: hezhiqiang
@@ -21,6 +22,8 @@ public class ProductEntity implements Product {
     private String name;
     private String description;
     private double price;
+    @Transient //忽略此属性
+    private String testColumn;
 
     @Generated(hash = 103207635)
     public ProductEntity(Long id, String name, String description, double price) {

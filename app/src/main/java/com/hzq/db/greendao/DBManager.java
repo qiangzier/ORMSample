@@ -40,6 +40,7 @@ public class DBManager {
     }
 
     public static void init(Context context){
+//        SQLiteOpenHelper oh = new DaoMaster.DevOpenHelper(context,DB_NAME,null);
         openHelper = new AppSQLiteOpenHelper(context, DB_NAME,null);
         mDatabase = openHelper.getWritableDb();
         daoSession = new DaoMaster(mDatabase).newSession();

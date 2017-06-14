@@ -3,10 +3,10 @@ package com.hzq.db.greendao.entity;
 import com.hzq.ormsample.model.Comment;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * @author: hezhiqiang
