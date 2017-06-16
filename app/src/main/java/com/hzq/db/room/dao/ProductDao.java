@@ -1,5 +1,6 @@
 package com.hzq.db.room.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -22,7 +23,13 @@ import java.util.List;
 public interface ProductDao {
 
     @Query("select * from products")
+    LiveData<List<ProductEntity>> queryLiveProducts();
+
+    @Query("select * from products")
     List<ProductEntity> queryProducts();
+
+    @Query("select * from products where id = :productId")
+    LiveData<ProductEntity> getLiveProductById(long productId);
 
     @Query("select * from products where id = :productId")
     ProductEntity getProductById(long productId);

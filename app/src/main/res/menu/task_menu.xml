@@ -5,5 +5,5 @@
         android:id="@+id/action_add"
         android:orderInCategory="90"
         android:title="添加"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 </menu>

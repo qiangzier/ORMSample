@@ -31,7 +31,7 @@ class MainActivity : BaseActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         adapter = MyAdapter(this)
         recyclerView.adapter = adapter
-        loadData()
+        refreshUI()
     }
 
     fun loadData(){
@@ -52,22 +52,29 @@ class MainActivity : BaseActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    fun refreshUI(){
+        when(DB.type){
+            0 -> {
+                title = "RoomSample"
+            }
+            1 -> {
+                DB.type = 1
+                title = "GreenDaoSample"
+            }
+        }
+        loadData()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId){
             R.id.action_room -> {
                 DB.type = 0
-                title = "RoomSample"
             }
             R.id.action_greendao -> {
                 DB.type = 1
-                title = "GreenDaoSample"
-            }
-            R.id.action_ormlite -> {
-                DB.type = 2
-                title = "ORMLiteSample"
             }
         }
-        loadData()
+        refreshUI()
         return super.onOptionsItemSelected(item)
     }
 

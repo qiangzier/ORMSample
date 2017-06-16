@@ -5,6 +5,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.hzq.db.room.AppDatabase;
 import com.hzq.ormsample.model.Product;
 
 /**
@@ -14,7 +15,7 @@ import com.hzq.ormsample.model.Product;
  * @description:
  */
 
-@Entity(tableName = "products",
+@Entity(tableName = AppDatabase.PRODUCT_TABLE_NAME,
         indices = {@Index(value = {"id","name"},unique = true)})
 public class ProductEntity implements Product{
     @PrimaryKey(autoGenerate = true)

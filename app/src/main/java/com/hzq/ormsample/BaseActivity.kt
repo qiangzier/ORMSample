@@ -1,5 +1,7 @@
 package com.hzq.ormsample
 
+import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.LifecycleRegistryOwner
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -12,7 +14,14 @@ import org.jetbrains.anko.find
  * @description:
  */
 
-open class BaseActivity : AppCompatActivity(){
+open class BaseActivity : AppCompatActivity(),LifecycleRegistryOwner{
+
+    private val mRegistry = LifecycleRegistry(this)
+
+    override fun getLifecycle(): LifecycleRegistry {
+        return mRegistry
+    }
+
     open protected fun initToolBar(){
         val toolBar = find<Toolbar>(R.id.toolBar)
         setSupportActionBar(toolBar)

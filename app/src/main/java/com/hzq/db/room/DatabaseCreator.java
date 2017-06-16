@@ -1,5 +1,7 @@
 package com.hzq.db.room;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
@@ -20,6 +22,7 @@ public class DatabaseCreator {
     private static final Object LOCK = new Object();
 
     private static AppDatabase appDatabase;
+    private static MutableLiveData<Boolean> createdDatabase = new MutableLiveData<>();
     public static DatabaseCreator getInstance(){
         if(INSTANCE == null){
             synchronized (LOCK){
@@ -37,8 +40,15 @@ public class DatabaseCreator {
         //创建数据库
         appDatabase = Room.databaseBuilder(context.getApplicationContext(),
                 AppDatabase.class,DATABASE_NAME)
+                .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2)
                 .build();
+
+        createdDatabase.setValue(true);
+    }
+
+    public LiveData<Boolean> getCreatedDatabase(){
+        return createdDatabase;
     }
 
     @Nullable

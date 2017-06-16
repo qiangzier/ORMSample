@@ -13,9 +13,4 @@
         android:title="GREENDAO"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_ormlite"
-        android:orderInCategory="90"
-        android:title="ORMLITE"
-        app:showAsAction="never"/>
 </menu>

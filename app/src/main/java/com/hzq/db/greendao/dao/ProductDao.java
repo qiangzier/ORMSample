@@ -26,7 +26,7 @@ public class ProductDao {
      * @param entity
      */
     public void insertProduct(ProductEntity entity){
-        mProductDao.insert(entity);
+        mProductDao.insertOrReplace(entity);
     }
 
     public void insertUserList(List<ProductEntity> entitys){

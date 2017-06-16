@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data class="ProductDetailBinding">
+        <variable
+            name="detailViewModel"
+            type="com.hzq.componets.viewmodel.ProductDetailViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/color_white">
+
+        <include layout="@layout/app_bar" />
+
+        <include layout="@layout/activity_item"
+            app:product="@{ detailViewModel.product }"
+            app:callback="@{ detailViewModel.productClickCallback }"/>
+
+    </LinearLayout>
+</layout>
